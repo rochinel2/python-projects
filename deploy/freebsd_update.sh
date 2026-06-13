@@ -51,11 +51,11 @@ cp "${API_SRC}/freebsd/server_status_api" "${SERVICE_FILE}"
 chmod +x "${SERVICE_FILE}"
 
 touch /var/log/${APP_NAME}.log
-chown www:wheel /var/log/${APP_NAME}.log
+chown root:wheel /var/log/${APP_NAME}.log
 chmod 640 /var/log/${APP_NAME}.log
 
 mkdir -p /var/run/${APP_NAME}
-chown www:wheel /var/run/${APP_NAME}
+chown root:wheel /var/run/${APP_NAME}
 chmod 755 /var/run/${APP_NAME}
 
 sysrc server_status_api_enable=YES >/dev/null

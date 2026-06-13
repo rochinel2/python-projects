@@ -10,14 +10,13 @@ name="server_status_api"
 rcvar="server_status_api_enable"
 
 : ${server_status_api_enable:="NO"}
-: ${server_status_api_user:="www"}
 : ${server_status_api_dir:="/usr/local/server_status_api"}
 : ${server_status_api_python:="/usr/local/bin/python3"}
 
 pid_dir="/var/run/${name}"
 pidfile="${pid_dir}/${name}.pid"
 command="/usr/sbin/daemon"
-command_args="-f -P ${pidfile} -u ${server_status_api_user} -r -R 5 -o /var/log/${name}.log ${server_status_api_python} ${server_status_api_dir}/app.py"
+command_args="-f -P ${pidfile} -r -R 5 -o /var/log/${name}.log ${server_status_api_python} ${server_status_api_dir}/app.py"
 
 start_precmd="${name}_prestart"
 
@@ -28,11 +27,11 @@ server_status_api_prestart()
     fi
 
     mkdir -p "${pid_dir}"
-    chown ${server_status_api_user}:wheel "${pid_dir}"
+    chown root:wheel "${pid_dir}"
     chmod 755 "${pid_dir}"
 
     touch /var/log/${name}.log
-    chown ${server_status_api_user}:wheel /var/log/${name}.log
+    chown root:wheel /var/log/${name}.log
     chmod 640 /var/log/${name}.log
 }
 
