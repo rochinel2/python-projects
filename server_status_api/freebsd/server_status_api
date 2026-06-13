@@ -14,7 +14,8 @@ rcvar="server_status_api_enable"
 : ${server_status_api_dir:="/usr/local/server_status_api"}
 : ${server_status_api_python:="/usr/local/bin/python3"}
 
-pidfile="/var/run/${name}.pid"
+pid_dir="/var/run/${name}"
+pidfile="${pid_dir}/${name}.pid"
 command="/usr/sbin/daemon"
 command_args="-f -P ${pidfile} -u ${server_status_api_user} -r -R 5 -o /var/log/${name}.log ${server_status_api_python} ${server_status_api_dir}/app.py"
 
@@ -25,6 +26,10 @@ server_status_api_prestart()
     if [ ! -d "${server_status_api_dir}" ]; then
         err 1 "Diretorio nao encontrado: ${server_status_api_dir}"
     fi
+
+    mkdir -p "${pid_dir}"
+    chown ${server_status_api_user}:wheel "${pid_dir}"
+    chmod 755 "${pid_dir}"
 
     touch /var/log/${name}.log
     chown ${server_status_api_user}:wheel /var/log/${name}.log
