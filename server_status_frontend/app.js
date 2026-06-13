@@ -1,5 +1,6 @@
 const API_BASE = "/api";
 const REFRESH_INTERVAL_MS = 10000;
+const THEME_STORAGE_KEY = "server-status-theme";
 
 const elements = {
     apiStatus: document.querySelector("#apiStatus"),
@@ -14,9 +15,49 @@ const elements = {
     connectionText: document.querySelector("#connectionText"),
     refreshButton: document.querySelector("#refreshButton"),
     autoRefresh: document.querySelector("#autoRefresh"),
+    themeButton: document.querySelector("#themeButton"),
+    themeIcon: document.querySelector("#themeIcon"),
+    themeText: document.querySelector("#themeText"),
 };
 
 let timerId = null;
+let currentTheme = "light";
+
+function getInitialTheme() {
+    const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+
+    if (savedTheme === "light" || savedTheme === "dark") {
+        return savedTheme;
+    }
+
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+    }
+
+    return "light";
+}
+
+function applyTheme(theme) {
+    currentTheme = theme;
+    document.body.classList.toggle("dark-theme", theme === "dark");
+
+    if (theme === "dark") {
+        elements.themeIcon.textContent = "Sol";
+        elements.themeText.textContent = "Claro";
+        elements.themeButton.setAttribute("aria-label", "Ativar tema claro");
+        return;
+    }
+
+    elements.themeIcon.textContent = "Lua";
+    elements.themeText.textContent = "Escuro";
+    elements.themeButton.setAttribute("aria-label", "Ativar tema escuro");
+}
+
+function toggleTheme() {
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    applyTheme(nextTheme);
+}
 
 function formatDate(value) {
     if (!value) {
@@ -101,6 +142,8 @@ elements.refreshButton.addEventListener("click", loadStatus);
 elements.autoRefresh.addEventListener("change", (event) => {
     setAutoRefresh(event.target.checked);
 });
+elements.themeButton.addEventListener("click", toggleTheme);
 
+applyTheme(getInitialTheme());
 loadStatus();
 setAutoRefresh(elements.autoRefresh.checked);
