@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+
+build/
+dist/
+*.spec
+
+*.zip
+*.tar.gz
+freebsd_api_package/
+
+config_clinux.xml
+ultimo_diretorio.txt
+.continue/

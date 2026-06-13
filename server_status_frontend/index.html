@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Status do Servidor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="shell">
+        <section class="status-panel">
+            <div class="topbar">
+                <div>
+                    <p class="eyebrow">Monitoramento</p>
+                    <h1>Status do Servidor</h1>
+                </div>
+                <div class="status-pill" id="connectionPill">
+                    <span class="dot"></span>
+                    <span id="connectionText">Verificando</span>
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <article class="metric primary">
+                    <span class="label">API</span>
+                    <strong id="apiStatus">-</strong>
+                    <small id="apiVersion">Versao -</small>
+                </article>
+
+                <article class="metric">
+                    <span class="label">Tempo ligada</span>
+                    <strong id="uptime">-</strong>
+                    <small id="uptimeSeconds">- segundos</small>
+                </article>
+
+                <article class="metric">
+                    <span class="label">Iniciada em</span>
+                    <strong id="startedAt">-</strong>
+                    <small>Horario local do navegador</small>
+                </article>
+
+                <article class="metric">
+                    <span class="label">Ultima leitura</span>
+                    <strong id="checkedAt">-</strong>
+                    <small id="refreshInfo">Atualizacao manual</small>
+                </article>
+            </div>
+
+            <div class="actions">
+                <button id="refreshButton" type="button">Atualizar agora</button>
+                <label class="toggle">
+                    <input id="autoRefresh" type="checkbox" checked>
+                    <span>Atualizar automaticamente</span>
+                </label>
+            </div>
+
+            <pre id="rawJson" class="raw-json">{}</pre>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

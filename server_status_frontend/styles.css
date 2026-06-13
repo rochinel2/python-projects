@@ -1,0 +1,241 @@
+:root {
+    color-scheme: light;
+    --bg: #f4f6f8;
+    --panel: #ffffff;
+    --text: #1d252d;
+    --muted: #66727f;
+    --line: #d9e0e7;
+    --accent: #1f7a5c;
+    --accent-dark: #125c44;
+    --danger: #b42318;
+    --danger-bg: #fff1f0;
+    --ok-bg: #eaf7f1;
+    --shadow: 0 16px 40px rgba(31, 42, 55, 0.10);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(244, 246, 248, 1)),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.shell {
+    width: min(1120px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 32px 0;
+}
+
+.status-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 24px;
+}
+
+.topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+}
+
+.eyebrow {
+    margin: 0 0 6px;
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.05;
+    letter-spacing: 0;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #f9fbfc;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-pill.ok {
+    border-color: #bfe5d2;
+    background: var(--ok-bg);
+    color: var(--accent-dark);
+}
+
+.status-pill.error {
+    border-color: #ffc9c3;
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #9aa7b2;
+}
+
+.status-pill.ok .dot {
+    background: var(--accent);
+}
+
+.status-pill.error .dot {
+    background: var(--danger);
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.metric {
+    min-height: 150px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    background: #fbfcfd;
+}
+
+.metric.primary {
+    background: #edf8f3;
+    border-color: #c7ead8;
+}
+
+.label {
+    display: block;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.metric strong {
+    display: block;
+    margin-top: 18px;
+    font-size: 26px;
+    line-height: 1.12;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+}
+
+.metric small {
+    display: block;
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+button {
+    min-height: 42px;
+    border: 0;
+    border-radius: 6px;
+    padding: 0 16px;
+    background: var(--accent);
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+button:hover {
+    background: var(--accent-dark);
+}
+
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.toggle input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+}
+
+.raw-json {
+    min-height: 170px;
+    max-height: 320px;
+    overflow: auto;
+    margin: 18px 0 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    background: #101820;
+    color: #d9f7e8;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+    .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .shell {
+        width: min(100% - 20px, 1120px);
+        padding: 10px 0;
+    }
+
+    .status-panel {
+        padding: 16px;
+    }
+
+    .topbar,
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-pill {
+        justify-content: center;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    button {
+        width: 100%;
+    }
+}

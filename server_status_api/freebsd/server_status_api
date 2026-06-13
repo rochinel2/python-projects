@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# PROVIDE: server_status_api
+# REQUIRE: NETWORKING
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name="server_status_api"
+rcvar="server_status_api_enable"
+
+: ${server_status_api_enable:="NO"}
+: ${server_status_api_user:="www"}
+: ${server_status_api_dir:="/usr/local/server_status_api"}
+: ${server_status_api_python:="/usr/local/bin/python3"}
+
+pidfile="/var/run/${name}.pid"
+command="/usr/sbin/daemon"
+command_args="-f -P ${pidfile} -u ${server_status_api_user} -r -R 5 -o /var/log/${name}.log ${server_status_api_python} ${server_status_api_dir}/app.py"
+
+start_precmd="${name}_prestart"
+
+server_status_api_prestart()
+{
+    if [ ! -d "${server_status_api_dir}" ]; then
+        err 1 "Diretorio nao encontrado: ${server_status_api_dir}"
+    fi
+
+    touch /var/log/${name}.log
+    chown ${server_status_api_user}:wheel /var/log/${name}.log
+    chmod 640 /var/log/${name}.log
+}
+
+load_rc_config $name
+run_rc_command "$1"
