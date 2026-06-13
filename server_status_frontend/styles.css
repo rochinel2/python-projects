@@ -157,6 +157,44 @@ h1 {
     margin-top: 20px;
 }
 
+.tabs {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 18px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+}
+
+.tab-button {
+    min-height: 36px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--muted);
+    padding: 0 12px;
+}
+
+.tab-button:hover,
+.tab-button.active {
+    border-color: var(--primary-line);
+    background: var(--primary-panel);
+    color: var(--text);
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+.server-grid .metric strong {
+    font-size: 22px;
+}
+
 .metric {
     min-height: 150px;
     border: 1px solid var(--line);
@@ -193,6 +231,81 @@ h1 {
     color: var(--muted);
     font-size: 13px;
     line-height: 1.35;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.detail-panel {
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    padding: 16px;
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.detail-header h2 {
+    margin: 0;
+    font-size: 17px;
+    letter-spacing: 0;
+}
+
+.load-row {
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th,
+td {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    color: var(--muted);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.dmesg-box {
+    min-height: 250px;
+    max-height: 360px;
+    overflow: auto;
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-size: 12px;
+    line-height: 1.45;
+    white-space: pre-wrap;
 }
 
 .actions {
@@ -273,6 +386,10 @@ button:disabled {
     .summary-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 620px) {
@@ -304,6 +421,11 @@ button:disabled {
     }
 
     .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tabs {
+        display: grid;
         grid-template-columns: 1fr;
     }
 

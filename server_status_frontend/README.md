@@ -2,6 +2,15 @@
 
 Frontend estatico para consultar a API em `/api/`.
 
+Ele possui duas abas:
+
+```text
+Status da API
+Status do Servidor
+```
+
+A aba do servidor consulta `/api/server/status` e mostra memoria RAM, processador, uptime do sistema, discos e ultimas mensagens do `dmesg`.
+
 ## Arquivos
 
 ```text

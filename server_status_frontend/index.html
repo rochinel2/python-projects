@@ -12,7 +12,7 @@
             <div class="topbar">
                 <div>
                     <p class="eyebrow">Monitoramento</p>
-                    <h1>Status do Servidor</h1>
+                    <h1>Status da API</h1>
                 </div>
                 <div class="header-actions">
                     <div class="status-pill" id="connectionPill">
@@ -27,6 +27,12 @@
                 </div>
             </div>
 
+            <nav class="tabs" aria-label="Paineis">
+                <button class="tab-button active" id="apiTab" type="button" data-view="api">Status da API</button>
+                <button class="tab-button" id="serverTab" type="button" data-view="server">Status do Servidor</button>
+            </nav>
+
+            <div class="view active" id="apiView">
             <div class="summary-grid">
                 <article class="metric primary">
                     <span class="label">API</span>
@@ -51,6 +57,68 @@
                     <strong id="checkedAt">-</strong>
                     <small id="refreshInfo">Atualizacao manual</small>
                 </article>
+            </div>
+            </div>
+
+            <div class="view" id="serverView">
+                <div class="summary-grid server-grid">
+                    <article class="metric primary">
+                        <span class="label">Servidor</span>
+                        <strong id="serverHostname">-</strong>
+                        <small id="serverSystem">Sistema -</small>
+                    </article>
+
+                    <article class="metric">
+                        <span class="label">Ligado ha</span>
+                        <strong id="serverUptime">-</strong>
+                        <small id="serverBoot">Inicializacao -</small>
+                    </article>
+
+                    <article class="metric">
+                        <span class="label">Memoria RAM</span>
+                        <strong id="serverMemory">-</strong>
+                        <small id="serverMemoryDetail">-</small>
+                    </article>
+
+                    <article class="metric">
+                        <span class="label">Processador</span>
+                        <strong id="serverCpuCores">-</strong>
+                        <small id="serverCpuModel">-</small>
+                    </article>
+                </div>
+
+                <div class="details-grid">
+                    <section class="detail-panel">
+                        <div class="detail-header">
+                            <h2>Carga e Disco</h2>
+                        </div>
+                        <div class="load-row" id="serverLoad">Load average: -</div>
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Montagem</th>
+                                        <th>Uso</th>
+                                        <th>Livre</th>
+                                        <th>%</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="serverDiskRows">
+                                    <tr>
+                                        <td colspan="4">-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <section class="detail-panel">
+                        <div class="detail-header">
+                            <h2>Ultimas mensagens do dmesg</h2>
+                        </div>
+                        <pre id="serverDmesg" class="dmesg-box">-</pre>
+                    </section>
+                </div>
             </div>
 
             <div class="actions">

@@ -41,6 +41,7 @@ GET /
 GET /hello
 GET /health
 GET /uptime
+GET /server/status
 ```
 
 Resposta do `/hello`:
@@ -61,6 +62,33 @@ Resposta de exemplo:
   "checked_at": "2026-06-13T16:25:30.000000+00:00",
   "uptime_seconds": 330,
   "uptime": "5m 30s"
+}
+```
+
+Resposta resumida do `/server/status`:
+
+```json
+{
+  "status": "running",
+  "hostname": "web",
+  "boot": {
+    "uptime": "3d 4h 20m"
+  },
+  "cpu": {
+    "model": "Intel(R) Xeon(R)",
+    "cores": 2
+  },
+  "memory": {
+    "used_percent": 42.5,
+    "used_gb": 1.2,
+    "total_gb": 4.0
+  },
+  "disk": {
+    "items": []
+  },
+  "dmesg": {
+    "lines": []
+  }
 }
 ```
 
