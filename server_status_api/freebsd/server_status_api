@@ -16,7 +16,7 @@ rcvar="server_status_api_enable"
 pid_dir="/var/run/${name}"
 pidfile="${pid_dir}/${name}.pid"
 command="/usr/sbin/daemon"
-command_args="-f -P ${pidfile} -r -R 5 -o /var/log/${name}.log ${server_status_api_python} ${server_status_api_dir}/app.py"
+command_args="-f -p ${pidfile} -o /var/log/${name}.log ${server_status_api_python} ${server_status_api_dir}/app.py"
 
 start_precmd="${name}_prestart"
 
