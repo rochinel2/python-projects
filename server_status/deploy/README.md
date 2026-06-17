@@ -6,7 +6,7 @@ Fluxo recomendado:
 pkg install git python nginx
 git clone https://github.com/rochinel2/python-projects.git /usr/local/src/python_projects
 cd /usr/local/src/python_projects
-sh deploy/freebsd_update.sh
+sh server_status/deploy/freebsd_update.sh
 ```
 
 Depois de novas alteracoes no Windows:
@@ -22,7 +22,7 @@ Na VM FreeBSD:
 ```sh
 cd /usr/local/src/python_projects
 git pull
-sh deploy/freebsd_update.sh
+sh server_status/deploy/freebsd_update.sh
 ```
 
 O script instala/atualiza:
@@ -38,5 +38,5 @@ O arquivo da API `/usr/local/server_status_api/config.xml` e preservado se ja ex
 Um exemplo de configuracao Nginx esta em:
 
 ```text
-deploy/nginx_server_status.conf.example
+server_status/deploy/nginx_server_status.conf.example
 ```
