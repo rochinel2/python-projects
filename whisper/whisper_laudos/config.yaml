@@ -1,0 +1,134 @@
+# =============================================================================
+# config.yaml — Configuração central do projeto whisper_laudos
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Caminhos do sistema
+# ---------------------------------------------------------------------------
+caminhos:
+  ffmpeg_exe: "C:\\ffmpeg\\bin\\ffmpeg.exe"
+  pasta_audios: "audios"
+  pasta_laudos: "laudos"
+  pasta_processados: "processados"
+  pasta_erros: "erros"
+  pasta_logs: "logs"
+  pasta_temp: "temp"
+  dados_originais: "dados_treinamento/originais"
+  dados_convertidos: "dados_treinamento/convertidos"
+  dados_segmentos: "dados_treinamento/segmentos"
+  dados_transcricoes: "dados_treinamento/transcricoes"
+  dados_manifestos: "dados_treinamento/manifestos"
+  modelos_checkpoints: "modelos/checkpoints"
+  modelos_final: "modelos/final"
+
+# ---------------------------------------------------------------------------
+# Modelo Whisper
+# ---------------------------------------------------------------------------
+modelo:
+  # Opções: openai/whisper-tiny, base, small, medium, large-v3
+  base: "openai/whisper-small"
+  # Após o fine-tuning, aponte para o modelo local: "modelos/final"
+  refinado: ""
+  idioma: "portuguese"
+  tarefa: "transcribe"
+  usar_gpu: true
+
+# ---------------------------------------------------------------------------
+# Transcrição de áudio longo
+# ---------------------------------------------------------------------------
+transcricao:
+  tamanho_janela: 25       # segundos por janela
+  sobreposicao: 3          # segundos de overlap
+  temperatura: 0.0         # 0.0 = greedy/determinístico
+  temperatura_fallback: [0.2, 0.4, 0.6, 0.8, 1.0]
+  max_tokens: 448
+  num_beams: 5
+  limiar_compressao: 2.4   # detectar alucinação/repetição
+  silencio_max: 1.5
+
+# ---------------------------------------------------------------------------
+# Monitoramento de pasta
+# ---------------------------------------------------------------------------
+monitoramento:
+  intervalo_segundos: 5
+  extensoes_aceitas: [".mp4", ".m4a", ".mp3", ".wav", ".flac"]
+  mover_concluidos: true
+  mover_erros: true
+  espera_copia: 3
+  tentativas_copia: 10
+
+# ---------------------------------------------------------------------------
+# Segmentação do dataset
+# ---------------------------------------------------------------------------
+segmentacao:
+  duracao_minima: 5.0
+  duracao_maxima: 30.0
+  duracao_alvo: 20.0
+  silencio_db: -40
+  silencio_min_ms: 300
+
+# ---------------------------------------------------------------------------
+# Treinamento LoRA
+# ---------------------------------------------------------------------------
+treinamento:
+  seed: 42
+  num_epochs: 30
+  # LR baixo (1e-4) estabiliza decoder autoregressive com LoRA
+  learning_rate: 1.0e-4
+  # batch=8 + grad_accum=4 → batch efetivo=32; cabe em ~6-8GB VRAM (fp16, small)
+  batch_size: 8
+  gradient_accumulation: 4
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  fp16: true
+  gradient_checkpointing: false
+  early_stopping_patience: 5
+  max_audio_duracao: 30.0
+  max_input_length: 3000
+  save_steps: 200
+  eval_steps: 200
+  save_total_limit: 3
+  split_treino: 0.80
+  split_validacao: 0.10
+  split_teste: 0.10
+
+# ---------------------------------------------------------------------------
+# Configuração LoRA
+# ---------------------------------------------------------------------------
+lora:
+  # rank=32 → boa expressividade; use 16 se dataset < 100 segmentos
+  r: 32
+  # alpha=2*r é heurística padrão
+  alpha: 64
+  dropout: 0.05
+  # q_proj + v_proj são os mais impactantes para ASR
+  target_modules:
+    - "q_proj"
+    - "v_proj"
+    - "k_proj"
+    - "out_proj"
+  bias: "none"
+
+# ---------------------------------------------------------------------------
+# Log
+# ---------------------------------------------------------------------------
+log:
+  nivel: "INFO"
+  arquivo: "whisper_laudos.log"
+  max_bytes: 10485760   # 10 MB
+  backup_count: 5
+
+# ---------------------------------------------------------------------------
+# Ciclo mensal de tuning supervisionado
+# ---------------------------------------------------------------------------
+ciclo_tuning:
+  pasta_base: "ciclo_tuning"
+  audios_recebidos: "ciclo_tuning/audios_recebidos"
+  transcricoes_whisper: "ciclo_tuning/transcricoes_whisper"
+  pdfs_corrigidos: "ciclo_tuning/pdfs_corrigidos"
+  textos_corrigidos: "ciclo_tuning/textos_corrigidos"
+  pares_validados: "ciclo_tuning/pares_validados"
+  rejeitados: "ciclo_tuning/rejeitados"
+  relatorios: "ciclo_tuning/relatorios"
+  manifesto_pares: "ciclo_tuning/relatorios/pares_ciclo.jsonl"
+  similaridade_minima_alerta: 0.55
